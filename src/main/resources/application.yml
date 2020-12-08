@@ -1,0 +1,26 @@
+server:
+  port: 5556
+
+spring:
+
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/pubsub
+    username: postgres
+    password: root
+    initialization-mode: always
+
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+
+  security:
+    vk-app:
+      client_id: 7692396
+      client_secret: E3U2qYshxL62UjPLdxaw
+      redirect_url: http://localhost:5556
+      auth_url: http://oauth.vk.com/authorize
+      token_url: https://oauth.vk.com/access_token
+      display: popup
+      response_type: code
+      version: 5.126
