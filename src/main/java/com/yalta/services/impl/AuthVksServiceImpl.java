@@ -1,6 +1,7 @@
 package com.yalta.services.impl;
 
 import lombok.Data;
+import lombok.RequiredArgsConstructor;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -8,6 +9,7 @@ import org.springframework.web.client.RestTemplate;
 
 @Data
 @Service
+@RequiredArgsConstructor
 @ConfigurationProperties(prefix="spring.security.vk-app")
 public class AuthVksServiceImpl {
 
@@ -19,6 +21,8 @@ public class AuthVksServiceImpl {
     private String tokenURL;
     private String display;
     private String version;
+
+    private final TestService testService; // todo delete
 
     public String getAuthURL() {
         return authURL + "?"
@@ -39,9 +43,7 @@ public class AuthVksServiceImpl {
 
     public void auth(String code) {
         String response = getAccessToken(code);
-        RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<String> responseEntity = restTemplate.getForEntity(response, String.class);
-        System.out.println(responseEntity.toString());
+        testService.go(response);
     }
 
 }
