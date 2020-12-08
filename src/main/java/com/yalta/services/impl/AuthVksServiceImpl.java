@@ -38,9 +38,9 @@ public class AuthVksServiceImpl {
     }
 
     public void auth(String code) {
-        String responce = getAccessToken(code);
+        String response = getAccessToken(code);
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<String> responseEntity = restTemplate.getForEntity(responce, String.class);
+        ResponseEntity<String> responseEntity = restTemplate.getForEntity(response, String.class);
         System.out.println(responseEntity.toString());
     }
 
