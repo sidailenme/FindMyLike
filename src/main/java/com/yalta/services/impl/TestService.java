@@ -18,7 +18,7 @@ public class TestService {
     public void go(String response) {
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<String> template = restTemplate.getForEntity(response, String.class);
-        System.out.println(template.getBody());
+//        System.out.println(template.getBody());
         ObjectMapper objectMapper = new ObjectMapper();
         Map<String, String> map = objectMapper.readValue(template.getBody(), Map.class);
         String url = "https://api.vk.com/method/"
@@ -27,7 +27,7 @@ public class TestService {
                 + "&v=5.126";
         RestTemplate restTemplate1 = new RestTemplate();
         ResponseEntity<String> forEntity = restTemplate1.getForEntity(url, String.class);
-        System.out.println(forEntity.getBody());
+//        System.out.println(forEntity.getBody());
     }
 
 }
