@@ -1,6 +1,5 @@
 package com.yalta.controllers;
 
-import com.yalta.services.impl.AuthVksServiceImpl;
 import com.yalta.services.interfaces.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -15,13 +14,13 @@ public class AuthController {
 
     @GetMapping("/get")
     public String go() {
-        return "redirect:" + authService.getAuthURL();
+        return "redirect:" + authService.createAuthURL();
     }
 
 
     @GetMapping("/")
     public void authVk(@RequestParam(value = "code", required = false) String code) {
-        System.out.println(authService.getAccessToken(code));
+        System.out.println(authService.takeAccessToken(code));
     }
 
 

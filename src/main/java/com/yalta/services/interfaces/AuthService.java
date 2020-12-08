@@ -2,7 +2,7 @@ package com.yalta.services.interfaces;
 
 public interface AuthService {
 
-    String getAuthURL();
+    String createAuthURL();
 
-    String getAccessToken(String code);
+    String takeAccessToken(String code);
 }
