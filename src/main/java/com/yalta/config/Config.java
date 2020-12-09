@@ -13,8 +13,8 @@ public class Config {
     }
 
     @Bean
-    public TargetUser targetUser() {
-        return new TargetUser();
+    public Session targetUser() {
+        return new Session();
     }
 
 }
