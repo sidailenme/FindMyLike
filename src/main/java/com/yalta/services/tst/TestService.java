@@ -1,4 +1,4 @@
-package com.yalta.services.impl;
+package com.yalta.services.tst;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Setter;

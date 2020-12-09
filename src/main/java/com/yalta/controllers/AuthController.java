@@ -1,8 +1,9 @@
 package com.yalta.controllers;
 
-import com.yalta.services.impl.FriendsServiceImpl;
-import com.yalta.services.impl.LikeService;
-import com.yalta.services.impl.PostService;
+import com.yalta.config.TargetUser;
+import com.yalta.services.tst.FriendsServiceImpl;
+import com.yalta.services.tst.LikeService;
+import com.yalta.services.tst.PostService;
 import com.yalta.services.interfaces.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -19,21 +20,23 @@ public class AuthController {
     private final FriendsServiceImpl friendsService;
     private final PostService postService;
     private final LikeService likeService;
+    private final TargetUser targetUser;
 
     @GetMapping("/get")
-    public String go() {
+    public String go(@RequestParam(value = "id", required = false) String targetUserId) {
+        targetUser.setId(targetUserId);
         return "redirect:" + authService.createAuthURL();
     }
 
 
     @GetMapping("/")
     public void authVk(@RequestParam(value = "code", required = false) String code) {
-        String token = authService.takeAccessToken(code);
+        String token = authService.takeAccessToken(code);           //todo
 //        List<String> friendsList = friendsService.takeFriendsIds(authService.takeAccessToken(code));
         List<String> userPosts = postService.takePostList(token, "137750708");
 
         for (String userPost : userPosts) {
-            likeService.takeLikeList(token, "137750708", userPost, "42729069");
+            likeService.takeLikeList(token, "137750708", userPost, targetUser.getId());
         }
 
     }

@@ -14,6 +14,7 @@ import java.util.Map;
 
 @Data
 @Service
+@RequiredArgsConstructor
 @ConfigurationProperties(prefix="spring.security.vk-app")
 public class AuthServiceImpl implements AuthService {
 
@@ -26,7 +27,7 @@ public class AuthServiceImpl implements AuthService {
     private String display;
     private String version;
 
-    private ObjectMapper o = new ObjectMapper();
+    private final ObjectMapper objectMapper;
 
     @Override
     public String createAuthURL() {
@@ -52,7 +53,7 @@ public class AuthServiceImpl implements AuthService {
         String accessTokenURL = createAccessTokenURL(code);
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<String> responseEntity = restTemplate.getForEntity(accessTokenURL, String.class);
-        Map<String, String> map = o.readValue(responseEntity.getBody(), Map.class);
+        Map<String, String> map = objectMapper.readValue(responseEntity.getBody(), Map.class);
         return map.get("access_token");
     }
 }
