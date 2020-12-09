@@ -24,9 +24,9 @@ public class FriendServiceImpl {
     public void takeFriendsIds(Session s) {
         List<User> friendsList = s.getFriendsList();
         String url = "https://api.vk.com/method/"
-                + "friends.get?user_id=166441826"
+                + "friends.get?user_id=" + s.getId()
                 + "&fields=nickname"
-                + "&count=3"
+                + "&count=500"
                 + "&access_token=" + s.getToken()
                 + "&v=5.126";
         RestTemplate restTemplate = new RestTemplate();

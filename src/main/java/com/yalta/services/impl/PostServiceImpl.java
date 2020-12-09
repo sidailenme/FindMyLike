@@ -13,6 +13,7 @@ import org.springframework.web.client.RestTemplate;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -26,23 +27,28 @@ public class PostServiceImpl {
         List<Post> postList = user.getPostList();
         String url = "https://api.vk.com/method/"
                 + "wall.get?owner_id=" + user.getId()
-                + "&count=2"
+                + "&count=20"
                 + "&access_token=" + s.getToken()
                 + "&v=5.126";
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<String> forEntity = restTemplate.getForEntity(url, String.class);
         Map map = objectMapper.readValue(forEntity.getBody(), Map.class);
         Map mapResponse = (Map) map.get("response");
-        List<LinkedHashMap> itemList = (List) mapResponse.get("items");
-        for (LinkedHashMap lhm : itemList) {
-            Post post = new Post();
-            post.setItemId(String.valueOf(lhm.get("id")));
-            postList.add(post);
+//        List<LinkedHashMap> itemList = (List) mapResponse.get("items");
+
+        List<LinkedHashMap> itemList = null;
+        try {
+            itemList = (List) mapResponse.get("items");
+        } catch (NullPointerException e) {
+            //trough
         }
-
-
-
-
+        if (itemList != null) {
+            for (LinkedHashMap lhm : itemList) {
+                Post post = new Post();
+                post.setItemId(String.valueOf(lhm.get("id")));
+                postList.add(post);
+            }
+        }
 
 
     }

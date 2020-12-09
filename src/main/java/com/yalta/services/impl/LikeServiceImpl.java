@@ -36,6 +36,7 @@ public class LikeServiceImpl {
         Integer like = (Integer) m1.get("liked");
         if (like == 1) {
             post.setLiked(true);
+            System.out.println(user.getFullName() + ": post #" + post.getItemId() + " is liked");
         }
     }
 

@@ -36,6 +36,7 @@ public class AuthController {
     public String authVk(@RequestParam(value = "code", required = false) String code) {
         s.setToken(authService.takeAccessToken(code));
         s.getFriendsList().clear();
+        System.out.println("Find likes is starting...");
         friendService.takeFriendsIds(s);
         for (User user : s.getFriendsList()) {
             postService.takePostsIds(s, user);
@@ -54,7 +55,7 @@ public class AuthController {
                 }
             }
         }
-        System.out.println("like is -------------");
+        System.out.println("Find likes is stopped...");
         likedPosts.stream().forEach(System.out::println);
 
 
