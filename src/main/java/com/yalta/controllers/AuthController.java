@@ -6,6 +6,7 @@ import com.yalta.model.User;
 import com.yalta.services.impl.FriendServiceImpl;
 import com.yalta.services.impl.LikeServiceImpl;
 import com.yalta.services.impl.PostServiceImpl;
+import com.yalta.services.impl.SubscriptionServiceImpl;
 import com.yalta.services.interfaces.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -24,6 +25,7 @@ public class AuthController {
     private final FriendServiceImpl friendService;
     private final PostServiceImpl postService;
     private final LikeServiceImpl likeService;
+    private final SubscriptionServiceImpl subscriptionService;
 
     @GetMapping("/get")
     public String go(@RequestParam(value = "id", required = false) String targetUserId) {
@@ -38,6 +40,7 @@ public class AuthController {
         s.getFriendsList().clear();
         System.out.println("Find likes is starting...");
         friendService.takeFriendsIds(s);
+        subscriptionService.takeSubscriptionList(s);
         for (User user : s.getFriendsList()) {
             postService.takePostsIds(s, user);
             for (Post post : user.getPostList()) {
@@ -56,7 +59,6 @@ public class AuthController {
             }
         }
         System.out.println("Find likes is stopped...");
-        likedPosts.stream().forEach(System.out::println);
 
 
 

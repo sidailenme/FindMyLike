@@ -23,7 +23,7 @@ public class PostServiceImpl {
 
     @SneakyThrows
     public void takePostsIds(Session s, User user) {
-        Thread.sleep(350);
+        Thread.sleep(200);
         List<Post> postList = user.getPostList();
         String url = "https://api.vk.com/method/"
                 + "wall.get?owner_id=" + user.getId()
@@ -34,7 +34,6 @@ public class PostServiceImpl {
         ResponseEntity<String> forEntity = restTemplate.getForEntity(url, String.class);
         Map map = objectMapper.readValue(forEntity.getBody(), Map.class);
         Map mapResponse = (Map) map.get("response");
-//        List<LinkedHashMap> itemList = (List) mapResponse.get("items");
 
         List<LinkedHashMap> itemList = null;
         try {

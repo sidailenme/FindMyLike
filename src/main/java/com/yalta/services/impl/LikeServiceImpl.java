@@ -21,7 +21,7 @@ public class LikeServiceImpl {
 
     @SneakyThrows
     public void findLikeOnPost(Session s, User user, Post post) {
-        Thread.sleep(350);
+        Thread.sleep(300);
         String url = "https://api.vk.com/method/"
                 + "likes.isLiked?user_id=" + s.getId()
                 + "&type=post"
