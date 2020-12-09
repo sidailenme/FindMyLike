@@ -35,6 +35,7 @@ public class AuthController {
     @GetMapping("/")
     public String authVk(@RequestParam(value = "code", required = false) String code) {
         s.setToken(authService.takeAccessToken(code));
+        s.getFriendsList().clear();
         friendService.takeFriendsIds(s);
         for (User user : s.getFriendsList()) {
             postService.takePostsIds(s, user);
