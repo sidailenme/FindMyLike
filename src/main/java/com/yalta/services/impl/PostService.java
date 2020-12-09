@@ -39,7 +39,7 @@ public class PostService {
         }
 
         list.stream().forEach(System.out::println);
-        return null;
+        return list;
     }
 
 
