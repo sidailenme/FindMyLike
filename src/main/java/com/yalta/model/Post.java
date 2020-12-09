@@ -7,4 +7,6 @@ public class Post {
 
     private String itemId;
 
+    private boolean isLiked;
+
 }

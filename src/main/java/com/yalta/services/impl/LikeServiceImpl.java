@@ -10,41 +10,34 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
-public class PostServiceImpl {
+public class LikeServiceImpl {
 
     private final ObjectMapper objectMapper;
 
     @SneakyThrows
-    public void takePostsIds(Session s, User user) {
+    public void findLikeOnPost(Session s, User user, Post post) {
         Thread.sleep(350);
-        List<Post> postList = user.getPostList();
         String url = "https://api.vk.com/method/"
-                + "wall.get?owner_id=" + user.getId()
-                + "&count=2"
+                + "likes.isLiked?user_id=" + s.getId()
+                + "&type=post"
+                + "&owner_id=" + user.getId()
+                + "&item_id=" + post.getItemId()
                 + "&access_token=" + s.getToken()
                 + "&v=5.126";
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<String> forEntity = restTemplate.getForEntity(url, String.class);
         Map map = objectMapper.readValue(forEntity.getBody(), Map.class);
-        Map mapResponse = (Map) map.get("response");
-        List<LinkedHashMap> itemList = (List) mapResponse.get("items");
-        for (LinkedHashMap lhm : itemList) {
-            Post post = new Post();
-            post.setItemId(String.valueOf(lhm.get("id")));
-            postList.add(post);
+        Map m1 = (Map) map.get("response");
+        Integer like = (Integer) m1.get("liked");
+        if (like == 1) {
+            post.setLiked(true);
         }
-
-
-
-
-
-
     }
+
 
 }
