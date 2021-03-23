@@ -13,7 +13,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -38,8 +41,11 @@ public class AuthController {
     public String authVk(@RequestParam(value = "code", required = false) String code) {
         s.setToken(authService.takeAccessToken(code));
         s.getFriendsList().clear();
-        System.out.println("Find likes is starting...");
-        friendService.takeFriendsIds(s);
+        System.out.println("Starting...");
+
+        Date start = new Date();
+
+//        friendService.takeFriendsIds(s);
         subscriptionService.takeSubscriptionList(s);
         for (User user : s.getFriendsList()) {
             postService.takePostsIds(s, user);
@@ -59,8 +65,8 @@ public class AuthController {
             }
         }
         System.out.println("Find likes is stopped...");
-
-
+        Date stop = new Date();
+        System.out.println((stop.getTime() - start.getTime()) / 1000);
 
         return "redirect:vk.com";
     }

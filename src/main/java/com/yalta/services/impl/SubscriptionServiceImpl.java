@@ -24,7 +24,7 @@ public class SubscriptionServiceImpl {
         List<User> friendsList = s.getFriendsList();
         String url = "https://api.vk.com/method/"
                 + "users.getSubscriptions?user_id=" + s.getId()
-                + "&count=100"
+                + "&count=200"
                 + "&extended=1"
                 + "&access_token=" + s.getToken()
                 + "&v=5.126";
